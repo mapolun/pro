@@ -4,16 +4,22 @@ import (
 	"github.com/gin-gonic/gin"
 	"pro/app/http/v1/server"
 	"pro/app/middle"
+	"pro/app/socket"
 	"pro/config"
 )
 
 func router(route *gin.Engine) *gin.Engine {
-	v1 := route.Group("/v1")
 
+	//socket服务器
+	route.GET("/ws", socket.Run)
+	//route.GET("/ws/ping", socket.Ping)
+
+	v1 := route.Group("/v1")
 	//遊客操作，无需登录
 	visitorAPI := v1.Group("/api")
 	{
 		visitorAPI.GET("index", server.Index)
+		visitorAPI.GET("test", server.Test)
 	}
 
 	return route

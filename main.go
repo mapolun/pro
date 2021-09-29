@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"pro/app/database"
+	"pro/app/cache"
+	"pro/app/model"
 	"pro/app/router"
 	"pro/config"
 	"time"
@@ -11,11 +12,11 @@ import (
 
 func main() {
 	config.Run()
-	if err := database.Run(); err != nil {
+	if err := model.Run(); err != nil {
 		fmt.Println("数据库链接失败:", err)
 		return
 	}
-	if err := database.RedisInit(); err != nil {
+	if err := cache.RedisInit(); err != nil {
 		fmt.Println("Reids链接失败:", err)
 		return
 	}
