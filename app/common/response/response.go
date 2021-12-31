@@ -9,7 +9,7 @@ import (
 //Success 正确输出
 func Success(c *gin.Context, msg string, data interface{}) {
 	c.JSON(http.StatusOK, gin.H{
-		"code":    config.Code.Ok,
+		"code":    config.Get.Code.Ok,
 		"message": msg,
 		"data":    data,
 	})
@@ -19,7 +19,7 @@ func Success(c *gin.Context, msg string, data interface{}) {
 //Error 错误输出
 func Error(c *gin.Context, msg string, args ...int) {
 	c.JSON(http.StatusOK, gin.H{
-		"code":    config.Code.No,
+		"code":    config.Get.Code.No,
 		"message": msg,
 	})
 	c.Abort()

@@ -8,10 +8,10 @@ import (
 
 func Access(c *gin.Context) {
 	var origin = c.Request.Header.Get("Origin")
-	if config.Mode != "dev" {
+	if config.Get.Mode != "dev" {
 		var isOk = false
 		isOk = false
-		allow := config.FrontEnd
+		allow := config.Get.FrontEnd
 		for _, v := range allow {
 			if origin == v {
 				isOk = true

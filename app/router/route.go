@@ -20,19 +20,20 @@ func router(route *gin.Engine) *gin.Engine {
 	{
 		visitorAPI.GET("index", server.Index)
 		visitorAPI.GET("test", server.Test)
+		visitorAPI.GET("export", server.Export)
 	}
 
 	return route
 }
 
 func RouteInit() *gin.Engine {
-	if config.Mode != "dev" {
+	if config.Get.Mode != "dev" {
 		gin.SetMode(gin.ReleaseMode)
 		gin.DisableConsoleColor()
 	}
 
 	route := gin.New()
-	if config.Mode == "dev" {
+	if config.Get.Mode == "dev" {
 		route.Use(gin.Logger())
 	}
 	route.Use(gin.Recovery()) // 捕捉异常

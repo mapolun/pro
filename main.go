@@ -23,7 +23,7 @@ func main() {
 	r := router.RouteInit()
 	r.Static("/static", "./static")
 	s := &http.Server{
-		Addr:           fmt.Sprintf(":%d", config.HTTPPort),
+		Addr:           fmt.Sprintf(":%d", config.Get.HttpPort),
 		Handler:        r,
 		ReadTimeout:    5 * time.Second,
 		WriteTimeout:   5 * time.Second,

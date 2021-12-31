@@ -1,0 +1,32 @@
+# 全局配置
+HttpPort = 3001 # HTTP 监听的端口号
+Mode = "dev" # 运行模式 dev=开发模式 (日志debug调整) produce=生产模式
+FrontEnd = ["http://localhost"] # 跨域白名单
+
+# 文件配置
+[Upload]
+    Host = "http://localhost" # 文件host地址
+    Dir = "/tmp" #文件上传目录
+
+# 数据库配置
+[Mysql]
+    Host = "192.168.2.222"
+    Database = "xmt"
+    UserName = "root"
+    Password = "Ezsv9499"
+    Port = 3306
+    MaxIdleConns = 1000 # 用于设置闲置的连接数
+    MaxOpenConns = 3000 # 用于设置最大打开的连接数，默认值为0表示不限制
+
+# redis配置
+[Redis]
+    Host = "192.168.2.222"
+    Password = ""
+    Port = "6701"
+    MaxIdle = 1000
+    MaxActive = 0
+    IdleTimeout = 300
+    MaxTimeout = 30
+
+
+

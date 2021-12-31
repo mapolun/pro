@@ -10,17 +10,17 @@ var RedisInter *redis.Pool
 //创建redis连接池
 func RedisInit() error {
 	pool := &redis.Pool{
-		MaxIdle:     config.Redis.MaxIdle,
-		MaxActive:   config.Redis.MaxActive,
-		IdleTimeout: config.Redis.IdleTimeout,
+		MaxIdle:     config.Get.Redis.MaxIdle,
+		MaxActive:   config.Get.Redis.MaxActive,
+		IdleTimeout: config.Get.Redis.IdleTimeout,
 		Dial: func() (redis.Conn, error) { //要连接的redis数据库
 			con, err := redis.Dial(
 				"tcp",
-				config.Redis.Host+":"+config.Redis.Port, // address
-				redis.DialPassword(config.Redis.Password),
-				redis.DialConnectTimeout(config.Redis.MaxTimeout),
-				redis.DialReadTimeout(config.Redis.MaxTimeout),
-				redis.DialWriteTimeout(config.Redis.MaxTimeout),
+				config.Get.Redis.Host+":"+config.Get.Redis.Port, // address
+				redis.DialPassword(config.Get.Redis.Password),
+				redis.DialConnectTimeout(config.Get.Redis.MaxTimeout),
+				redis.DialReadTimeout(config.Get.Redis.MaxTimeout),
+				redis.DialWriteTimeout(config.Get.Redis.MaxTimeout),
 			)
 			if err != nil {
 				return nil, err
