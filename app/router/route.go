@@ -12,7 +12,6 @@ func router(route *gin.Engine) *gin.Engine {
 
 	//socket服务器
 	route.GET("/ws", socket.Run)
-	//route.GET("/ws/ping", socket.Ping)
 
 	v1 := route.Group("/v1")
 	//遊客操作，无需登录
@@ -29,14 +28,29 @@ func router(route *gin.Engine) *gin.Engine {
 func RouteInit() *gin.Engine {
 	if config.Get.Mode != "dev" {
 		gin.SetMode(gin.ReleaseMode)
-		gin.DisableConsoleColor()
 	}
-
 	route := gin.New()
-	if config.Get.Mode == "dev" {
+
+	/************************************/
+	/********** 服务中间件 ********/
+	/************************************/
+
+	//日志
+	gin.DisableConsoleColor() //禁用控制台日志颜色
+	if config.Get.Mode != "dev" {
+		route.Use(middle.HandlerLogger())
+	} else {
 		route.Use(gin.Logger())
 	}
-	route.Use(gin.Recovery()) // 捕捉异常
-	route.Use(middle.Access)
+
+	//404
+	route.NoRoute(middle.HandlerNotFound)
+	route.NoMethod(middle.HandlerNotFound)
+
+	//异常
+	route.Use(middle.HandlerRecover)
+
+	//鉴权
+	route.Use(middle.HandlerAccess)
 	return router(route)
 }

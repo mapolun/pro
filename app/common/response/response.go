@@ -26,11 +26,15 @@ func Error(c *gin.Context, msg string, args ...int) {
 }
 
 //Handler 自定义输出
-func Handler(c *gin.Context, msg string, status int, data interface{}) {
-	c.JSON(http.StatusOK, gin.H{
-		"code":    status,
+func Handler(c *gin.Context, msg string, code int, data interface{}) {
+	h := gin.H{
+		"code":    code,
 		"message": msg,
-		"data":    data,
-	})
+	}
+
+	if data != nil {
+		h["data"] = data
+	}
+	c.JSON(code, h)
 	c.Abort()
 }

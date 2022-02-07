@@ -3,8 +3,11 @@ package server
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"log"
 	"pro/app/cache"
 	"pro/app/common/response"
+	"pro/app/middle"
 )
 
 func Index(c *gin.Context) {
@@ -12,21 +15,32 @@ func Index(c *gin.Context) {
 	r, err := redis.Do("Set", "test", 111)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 	response.Success(c, "ok", r)
 }
 
 func Test(c *gin.Context) {
-	type params struct {
-		Id   int    `json:"id"   binding:"required"`
-		Name string `json:"name" binding:"required"`
-	}
-	if err := c.ShouldBind(&params{}); err != nil {
-		fmt.Println(err.Error())
-		response.Error(c, "参数错误")
-	}
-	fmt.Println(params{})
 
-	//dec := json.NewDecoder(strings.NewReader(jsonstring))
-	//fmt.Println(dec)
+	logger := new(middle.Logger)
+	l, err := logger.New()
+	if err != nil {
+		response.Error(c, err.Error())
+		return
+	}
+
+	l.Log(logrus.InfoLevel, "123")
+	l.Debug("调试")
+
+	type paramsMod struct {
+		Id   int    `form:"id" binding:"required"`
+		Name string `form:"name" binding:"required"`
+	}
+	var params paramsMod
+	if err := c.BindQuery(&params); err != nil {
+		log.Println(err.Error())
+		response.Error(c, "参数错误")
+		return
+	}
+	response.Success(c, "asd", nil)
 }
