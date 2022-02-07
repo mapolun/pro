@@ -16,6 +16,7 @@ type config struct {
 	Limit      int      //分页一页显示数量
 	TimeFormat string   //格式化时间
 	Upload     *upload
+	Log        *log
 	Mysql      *mysqlConf
 	Redis      *redisConf
 	Code       *codeConf
@@ -25,6 +26,10 @@ type config struct {
 type upload struct {
 	Host string
 	Dir  string
+}
+
+type log struct {
+	Dir string
 }
 
 //mysql
@@ -57,15 +62,14 @@ type codeConf struct {
 
 //初始化配置
 func Run() {
-	var mode string
-	//设置模式
-	flag.StringVar(&mode, "mode", "dev", "运行模式")
 	conf, err := readToml()
 	if err != nil {
 		panic("配置文件解析失败" + err.Error())
 	}
-	conf.Mode = mode
 	Get = conf
+	var mode string
+	//设置模式
+	flag.StringVar(&mode, "mode", conf.Mode, "运行模式")
 	fmt.Println("设置初始化成功，应用：" + mode + "模式")
 }
 

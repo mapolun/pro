@@ -3,6 +3,10 @@ HttpPort = 3001 # HTTP 监听的端口号
 Mode = "dev" # 运行模式 dev=开发模式 (日志debug调整) produce=生产模式
 FrontEnd = ["http://localhost"] # 跨域白名单
 
+#日志
+[Log]
+    Dir = "/log" #日志写入目录
+
 # 文件配置
 [Upload]
     Host = "http://localhost" # 文件host地址
