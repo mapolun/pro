@@ -4,7 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"pro/app/common/response"
+	"pro/app/library/logger"
+	"pro/app/library/response"
 	"pro/config"
 	"runtime/debug"
 	"time"
@@ -60,7 +61,7 @@ func HandlerNotFound(c *gin.Context) {
 
 //日志服务
 func HandlerLogger() gin.HandlerFunc {
-	logger := new(Logger)
+	logger := new(logger.Logger)
 	l, err := logger.New()
 	if err != nil {
 		log.Println("日志错误获取：", err)

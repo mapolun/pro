@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"pro/app/cache"
+	cache2 "pro/app/library/cache"
 	"pro/app/model"
 	"pro/app/router"
 	"pro/config"
@@ -16,7 +16,7 @@ func main() {
 		fmt.Println("数据库链接失败:", err)
 		return
 	}
-	if err := cache.RedisInit(); err != nil {
+	if err := cache2.RedisInit(); err != nil {
 		fmt.Println("Reids链接失败:", err)
 		return
 	}

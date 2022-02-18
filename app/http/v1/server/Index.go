@@ -5,9 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"log"
-	"pro/app/cache"
-	"pro/app/common/response"
-	"pro/app/middle"
+	"pro/app/library/cache"
+	"pro/app/library/logger"
+	"pro/app/library/response"
 )
 
 func Index(c *gin.Context) {
@@ -22,7 +22,7 @@ func Index(c *gin.Context) {
 
 func Test(c *gin.Context) {
 
-	logger := new(middle.Logger)
+	logger := new(logger.Logger)
 	l, err := logger.New()
 	if err != nil {
 		response.Error(c, err.Error())
