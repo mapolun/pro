@@ -26,14 +26,15 @@ func (o *Logger) New() (*logrus.Logger, error) {
 		month := strconv.Itoa(int(time.Now().Month()))
 		day := strconv.Itoa(time.Now().Day())
 
-		tmpPath := fn.GetRootPath() + config.Get.Log.Dir + "/" + year + "-" + month + "/"
+		tmpPath := "/" + year + "-" + month + "/"
 
 		fileName := day + ".log"
 
 		o.filePath = tmpPath + fileName
 	}
+	filePath := fn.GetRootPath() + config.Get.Log.Dir + o.filePath
 
-	f, err := fn.GetFile(o.filePath)
+	f, err := fn.GetFile(filePath)
 	if err != nil {
 		return nil, err
 	}

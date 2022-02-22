@@ -19,7 +19,7 @@ func HandlerAccess(c *gin.Context) {
 		isOk = false
 		allow := config.Get.FrontEnd
 		for _, v := range allow {
-			if origin == v {
+			if v == "*" || origin == v {
 				isOk = true
 				break
 			}
@@ -31,11 +31,15 @@ func HandlerAccess(c *gin.Context) {
 		}
 	}
 
-	c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 
+	c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+
 	if c.Request.Method == "OPTIONS" {
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST,GET,PUT,OPTIONS") //允许的请求类型
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE") //允许的请求类型
+		c.Header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+		c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Cache-Control, Content-Language, Content-Type")
 		c.Header("Access-Control-Max-Age", "172800")
 		c.JSON(http.StatusOK, "Options Request!")
 		return

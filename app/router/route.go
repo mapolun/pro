@@ -4,22 +4,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"pro/app/http/v1/server"
 	"pro/app/middle"
-	"pro/app/socket"
 	"pro/config"
 )
 
 func router(route *gin.Engine) *gin.Engine {
 
-	//socket服务器
-	route.GET("/ws", socket.Run)
-
 	v1 := route.Group("/v1")
 	//遊客操作，无需登录
 	visitorAPI := v1.Group("/api")
 	{
-		visitorAPI.GET("index", server.Index)
-		visitorAPI.GET("test", server.Test)
-		visitorAPI.GET("export", server.Export)
+		visitorAPI.POST("wechatComplain", server.WechatComplain) //假投诉
+		visitorAPI.POST("uploadImage", server.UploadImage)       //图片上传
 	}
 
 	return route

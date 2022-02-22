@@ -35,7 +35,7 @@ func GetFile(filePath string) (*os.File, error) {
 	//写入路径
 	isDir := DirExists(path)
 	if isDir == false {
-		err := os.MkdirAll(path, 0775)
+		err := os.MkdirAll(path, os.ModePerm)
 		if err != nil {
 			return nil, err
 		}
@@ -51,7 +51,6 @@ func GetFile(filePath string) (*os.File, error) {
 
 //获取根目录
 func GetRootPath() string {
-	binary, _ := os.Executable()
-	root := filepath.Dir(filepath.Dir(binary))
+	root, _ := os.Getwd()
 	return root
 }

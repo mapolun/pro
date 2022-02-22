@@ -1,7 +1,7 @@
 # 全局配置
 HttpPort = 3001 # HTTP 监听的端口号
-Mode = "dev" # 运行模式 dev=开发模式 (日志debug调整) produce=生产模式
-FrontEnd = ["http://localhost"] # 跨域白名单
+Mode = "produce" # 运行模式 dev=开发模式 (日志debug调整) produce=生产模式
+FrontEnd = ["*"] # 跨域白名单
 
 #日志
 [Log]
@@ -9,11 +9,12 @@ FrontEnd = ["http://localhost"] # 跨域白名单
 
 # 文件配置
 [Upload]
-    Host = "http://localhost" # 文件host地址
-    Dir = "/tmp" #文件上传目录
+    Host = "" # 文件host地址
+    Dir = "/data/resources/tousu/upload" #文件上传目录
 
 # 数据库配置
 [Mysql]
+    State = 0 # 开关 0=关闭 1=开启
     Host = "192.168.2.222"
     Database = "xmt"
     UserName = "root"
@@ -24,6 +25,7 @@ FrontEnd = ["http://localhost"] # 跨域白名单
 
 # redis配置
 [Redis]
+    State = 0 # 开关 0=关闭 1=开启
     Host = "192.168.2.222"
     Password = ""
     Port = "6701"

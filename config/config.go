@@ -34,6 +34,7 @@ type log struct {
 
 //mysql
 type mysqlConf struct {
+	State        int
 	Host         string
 	Database     string
 	UserName     string
@@ -45,6 +46,7 @@ type mysqlConf struct {
 
 //redis
 type redisConf struct {
+	State       int
 	Host        string
 	Password    string
 	Port        string
@@ -76,6 +78,7 @@ func Run() {
 //读取toml配置文件
 func readToml() (*config, error) {
 	conf := &config{}
+
 	_, err := toml.DecodeFile("./config/config.toml", conf)
 	if err != nil {
 		return conf, err
